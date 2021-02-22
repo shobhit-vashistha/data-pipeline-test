@@ -65,7 +65,7 @@ def test_flow(kafka_connections):
     event_mid_set = set([e['mid'] for e in event_data['events']])
     print(event_data)
 
-    print("\n-> Producing event")
+    print("\n-> Producing event in topic: %s" % KAFKA_TOPIC_INGEST)
     kafka_connections['producer'].send(topic=KAFKA_TOPIC_INGEST, value=event_data)
 
     print("\n-> Waiting for message to appear in ingest topic...")
