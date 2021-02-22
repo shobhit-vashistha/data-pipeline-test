@@ -21,7 +21,7 @@ End - This method is used to capture closure after all the activities are comple
 import uuid
 import time
 
-from test.env import ENV
+from env import ENV
 
 EVENT_TYPES = {
     'START',

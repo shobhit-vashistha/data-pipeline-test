@@ -1,11 +1,12 @@
 import json
 import traceback
+import time
 
 from kafka import KafkaProducer, KafkaConsumer
 
-from test.env import KAFKA_PORT, KAFKA_IP, KAFKA_TOPIC_INGEST, KAFKA_TOPIC_RAW, KAFKA_TOPIC_UNIQUE, KAFKA_TOPIC_DE_NORM, \
+from env import KAFKA_PORT, KAFKA_IP, KAFKA_TOPIC_INGEST, KAFKA_TOPIC_RAW, KAFKA_TOPIC_UNIQUE, KAFKA_TOPIC_DE_NORM, \
     KAFKA_TOPIC_DRUID_EVENTS
-from test.event import get_impression_event_data
+from event import get_impression_event_data
 
 
 BOOTSTRAP_SERVERS = [
@@ -33,18 +34,28 @@ def get_kafka_consumer(topic, latest=True):
     )
 
 
-def look_for_event(consumer, id_func):
-    for message in consumer:
-        if id_func(message):
-            return message
-
-
-def look_for_events(consumer, id_func):
+def look_for_events(consumer, id_func, limit=None):
     ret = []
     for message in consumer:
         if id_func(message):
             ret.append(message)
+            if limit and len(ret) == limit:
+                return ret
     return ret
+
+
+def get_events(consumer, id_func, limit=None):
+    start = time.time()
+    messages = look_for_events(consumer, id_func, limit)
+    wait = time.time() - start
+    print("Wait: %.2f ms" % (wait * 1000))
+    if messages:
+        print("Success!")
+        print(messages)
+        return messages
+    else:
+        print("Failed to get any messages")
+        return messages
 
 
 def test_flow(kafka_connections):
@@ -58,29 +69,19 @@ def test_flow(kafka_connections):
     kafka_connections['producer'].send(topic=KAFKA_TOPIC_INGEST, value=event_data)
 
     print("\n-> Waiting for message to appear in ingest topic...")
-    message = look_for_event(kafka_connections['consumer_ingest'], lambda m: m['params']['msgid'] == msg_id)
-    print("Success!")
-    print(message)
+    messages = get_events(kafka_connections['consumer_ingest'], lambda m: m['params']['msgid'] == msg_id, limit=1)
 
     print("\n-> Waiting for message to appear in raw topic...")
-    messages = look_for_events(kafka_connections['consumer_raw'], lambda m: m['mid'] in event_mid_set)
-    print("Success!")
-    print(messages)
+    messages = get_events(kafka_connections['consumer_raw'], lambda m: m['mid'] in event_mid_set)
 
     print("\n-> Waiting for message to appear in unique topic...")
-    messages = look_for_events(kafka_connections['consumer_unique'], lambda m: m['mid'] in event_mid_set)
-    print("Success!")
-    print(messages)
+    messages = get_events(kafka_connections['consumer_unique'], lambda m: m['mid'] in event_mid_set)
 
     print("\n-> Waiting for message to appear in de-norm topic...")
-    messages = look_for_event(kafka_connections['consumer_de_norm'], lambda m: m['mid'] in event_mid_set)
-    print("Success!")
-    print(messages)
+    messages = get_events(kafka_connections['consumer_de_norm'], lambda m: m['mid'] in event_mid_set)
 
     print("\n-> Waiting for message to appear in druid-events topic...")
-    messages = look_for_event(kafka_connections['consumer_druid_events'], lambda m: m['mid'] in event_mid_set)
-    print("Success!")
-    print(messages)
+    messages = get_events(kafka_connections['consumer_druid_events'], lambda m: m['mid'] in event_mid_set)
 
     print("\nSuccess! Events have reached druid ingestion topic")
     return True
@@ -113,4 +114,7 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    success = test()
+    print("_" * 20 + "\n")
+    print("TEST SUCCESS" if success else "TEST FAILED")
+    print("_" * 20)
