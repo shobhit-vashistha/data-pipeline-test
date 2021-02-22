@@ -21,6 +21,9 @@ CONSUMER_WAIT_TIMEOUT_MS = 60 * 1000  # 60 seconds
 
 CONSUMER_POLL_TIMEOUT_MS = 500  # 0.5 second
 
+def log(message):
+    logging.info()
+
 
 def get_kafka_producer():
     return KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVERS, value_serializer=lambda x: json.dumps(x).encode('utf-8'))
@@ -91,7 +94,7 @@ class Tester(object):
     def consume_ingest_callback(self, messages):
         print("Consume Ingest Callback")
         print(messages)
-        self.results['consumer_ingest'] = bool(messages)
+        self.results['consumer_ingest'] = messages
         print("\n")
 
     def test_flow(self):
@@ -111,7 +114,8 @@ class Tester(object):
         for process in processes:
             process.wait()
 
-        return all(self.results.values())
+        print(self.results)
+        return all(bool(x) for x in self.results.values())
 
     def test(self):
         try:
