@@ -72,5 +72,5 @@ def get_kafka_messages(results, topic, event_data, limit=None):
     filter_func, filter_func_args_extractor = FILTER_FUNCTIONS[topic]
     filter_func_args = filter_func_args_extractor(event_data)
     consumer = get_kafka_consumer(topic)
-    messages = get_messages(consumer, filter_func, filter_func_args, limit)
-    results[topic] = messages
+    messages, wait_seconds = get_messages(consumer, filter_func, filter_func_args, limit)
+    results[topic] = {'messages': messages, 'wait_seconds': wait_seconds}

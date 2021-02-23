@@ -17,7 +17,7 @@ TEST_CONFIG = [
     {
         'name': 'normal-event-test',
         'consumer_topics': [
-            KAFKA_TOPIC_INGEST,  # KAFKA_TOPIC_RAW, KAFKA_TOPIC_UNIQUE, KAFKA_TOPIC_DE_NORM, KAFKA_TOPIC_DRUID_EVENTS
+            KAFKA_TOPIC_INGEST, KAFKA_TOPIC_RAW, KAFKA_TOPIC_UNIQUE, KAFKA_TOPIC_DE_NORM, KAFKA_TOPIC_DRUID_EVENTS
         ],
         'limits': {
             KAFKA_TOPIC_INGEST: 1
@@ -62,8 +62,25 @@ def run_test(test_config):
         for pro in consumer_processes:
             pro.join()
 
-        pr('Results:')
-        pr(results)
+        passed_dict = {}
+        pr('\nResults:\n')
+        for topic, data in results.items():
+            pr('Topic: %s' % topic)
+            pr('- Wait: %s' % data['wait_seconds'])
+            messages = data['messages']
+            if not messages:
+                passed_dict[topic] = False
+                pr('- Error: No messages found')
+            else:
+                passed_dict[topic] = True
+                pr('- Data:')
+                pr(messages)
+        pr('\n')
+
+        return {
+            'results': results,
+            'passed': bool(passed_dict) and all(passed for passed in passed_dict.values())
+        }
 
     except Exception as e:
         pre(e, 'error while running test')
@@ -73,7 +90,7 @@ def run_test(test_config):
             if ingest_producer:
                 ingest_producer.close()
 
-            pr('Closing consumer')
+            pr('Closing consumers')
             for pro in consumer_processes:
                 pro.close()
         except Exception as e:
@@ -81,9 +98,18 @@ def run_test(test_config):
 
 
 def run_all_tests():
+    all_results = []
     for test_config in TEST_CONFIG:
-        run_test(test_config)
+        results = run_test(test_config)
+        all_results.append({
+            'config': test_config,
+            'results': results
+        })
+    return all_results
 
 
 if __name__ == '__main__':
-    run_all_tests()
+    test_results = run_all_tests()
+    pr('All Tests Complete')
+    pr('Results:')
+    pr(test_results)
