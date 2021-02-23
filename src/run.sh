@@ -1,2 +1,2 @@
 source scripts/env.sh
-python -u test/dp.py
+python -u test/main.py

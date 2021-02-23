@@ -15,3 +15,7 @@ KAFKA_TOPIC_LOGS = ENV + '.' + os.environ.get('kafka_topic_logs')
 
 KAFKA_TOPIC_FAILED = ENV + '.' + os.environ.get('kafka_topic_failed')
 KAFKA_TOPIC_DUPLICATE = ENV + '.' + os.environ.get('kafka_topic_duplicate')
+
+
+BOOTSTRAP_SERVER = '%s:%s' % (KAFKA_IP, KAFKA_PORT)
+
