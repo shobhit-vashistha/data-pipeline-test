@@ -81,7 +81,7 @@ def run_test(test_config):
         pr('\n')
 
         return {
-            'results': results,
+            'results': result_data_dict,
             'passed': bool(passed_dict) and all(passed for passed in passed_dict.values())
         }
 
