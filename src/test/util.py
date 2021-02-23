@@ -1,13 +1,10 @@
 import json
 import sys
 import traceback
-import pprint
-
-pp = pprint.PrettyPrinter(indent=4)
 
 
 def pr(stuff):
-    pp.pprint(stuff)
+    print(stuff)
     sys.stdout.flush()
 
 
