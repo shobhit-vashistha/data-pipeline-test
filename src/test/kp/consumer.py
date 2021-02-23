@@ -37,20 +37,21 @@ def get_messages(consumer, filter_func, filter_func_args, limit=None,  timeout=1
                 continue
             pr('- [Consumer] Received message: {0}'.format(msg_data))
 
-            for msg_record in msg_data.values():
-                msg = msg_record.value
-                # deserialize_message = deserialize(msg)
-                # if deserialize_message is None:
-                #     pr('- [Consumer] Error: Could not deserialize message, ignoring')
+            for msg_records in msg_data.values():
+                for msg_record in msg_records:
+                    msg = msg_record.value
+                    # deserialize_message = deserialize(msg)
+                    # if deserialize_message is None:
+                    #     pr('- [Consumer] Error: Could not deserialize message, ignoring')
 
-                if filter_func(msg, *filter_func_args):
-                    pr('- [Consumer] YAY: Message found, adding')
-                    messages.append(msg)
-                    # exit if limit reached
-                    if limit and len(messages) == limit:
-                        break
-                else:
-                    pr('- [Consumer] Message does not clear the filter, ignoring')
+                    if filter_func(msg, *filter_func_args):
+                        pr('- [Consumer] YAY: Message found, adding')
+                        messages.append(msg)
+                        # exit if limit reached
+                        if limit and len(messages) == limit:
+                            break
+                    else:
+                        pr('- [Consumer] Message does not clear the filter, ignoring')
 
     except Exception as e:
         pr('- [Consumer] Error:')
