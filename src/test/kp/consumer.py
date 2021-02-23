@@ -32,10 +32,15 @@ def get_messages(consumer, filter_func, filter_func_args, limit=None,  timeout=1
     try:
         while time.time() - start < timeout:
             msg_data = consumer.poll(0.1)
+            pr('- [Consumer] Received message: {0}'.format(msg_data))
+
+            continue
             msgs = msg_data.values()[0]
             if not msgs:
                 continue
-            pr('- [Consumer] Received message: {0}'.format(msgs))
+
+            # pr('- [Consumer] Received message: {0}'.format(msgs))
+
             for msg in msgs:
                 # deserialize_message = deserialize(msg)
                 # if deserialize_message is None:
