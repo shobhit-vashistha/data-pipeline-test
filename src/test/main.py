@@ -63,6 +63,7 @@ def run_test(test_config):
             pro.join()
 
         passed_dict = {}
+        result_data_dict = {}
         pr('\nResults:\n')
         for topic, data in results.items():
             pr('Topic: %s' % topic)
@@ -70,9 +71,11 @@ def run_test(test_config):
             messages = data['messages']
             if not messages:
                 passed_dict[topic] = False
+                result_data_dict[topic] = []
                 pr('- Error: No messages found')
             else:
                 passed_dict[topic] = True
+                result_data_dict[topic] = messages
                 pr('- Data:')
                 pr(messages)
         pr('\n')
