@@ -1,7 +1,7 @@
 import multiprocessing as mp
 import traceback
 
-from backend import get_kafka_client
+from backend import get_kafka_client, get_kafka_messages
 from config import TEST_CONFIG
 from env import KAFKA_TOPIC_INGEST
 
@@ -33,7 +33,7 @@ def run_test(test_config):
 
         for topic, expected_count in expected_counts.items():
             pro = mp.Process(
-                target=client.get_kafka_messages,
+                target=get_kafka_messages,
                 args=(results, topic, events_data, expected_count)
             )
             consumer_processes.append(pro)
