@@ -31,17 +31,18 @@ TEST_CONFIG = [
     {
         'name': 'individual-event-test',
         'events_data_function': data.get_individual_event_test_data,
-    }, {
-        'name': 'multiple-event-test',
-        'events_data_function': data.get_multiple_event_test_data,
-    }, {
-        'name': 'multiple-batch-event-test',
-        'events_data_function': data.get_multiple_batch_event_test_data,
-    }, {
-        'name': 'duplicate-batch-event-test',
-        'events_data_function': data.get_duplicate_batch_event_test_data,
-    }, {
-        'name': 'duplicate-event-test',
-        'events_data_function': data.get_duplicate_event_test_data,
-    }
+    },
+    # {
+    #     'name': 'multiple-event-test',
+    #     'events_data_function': data.get_multiple_event_test_data,
+    # }, {
+    #     'name': 'multiple-batch-event-test',
+    #     'events_data_function': data.get_multiple_batch_event_test_data,
+    # }, {
+    #     'name': 'duplicate-batch-event-test',
+    #     'events_data_function': data.get_duplicate_batch_event_test_data,
+    # }, {
+    #     'name': 'duplicate-event-test',
+    #     'events_data_function': data.get_duplicate_event_test_data,
+    # }
 ]

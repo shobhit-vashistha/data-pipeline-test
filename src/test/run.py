@@ -1,3 +1,4 @@
+import json
 import multiprocessing as mp
 import traceback
 
@@ -111,9 +112,9 @@ def process_results(results):
 
 def format_results(test_results, html=False):
     # TODO
-    return str(test_results)
+    return json.dumps(test_results, indent=4)
 
 
 def print_test_results(test_results, html=False, file=None):
     # TODO
-    log.p(test_results)
+    log.p(format_results(test_results))
