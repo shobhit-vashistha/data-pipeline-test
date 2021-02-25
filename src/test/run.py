@@ -2,7 +2,7 @@ import json
 import multiprocessing as mp
 import traceback
 
-from backend import get_kafka_client, get_kafka_messages
+from backend.base import get_kafka_client, get_kafka_messages
 from config import TEST_CONFIG
 from env import KAFKA_TOPIC_INGEST
 
