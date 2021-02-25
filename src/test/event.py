@@ -1,4 +1,8 @@
 """
+Utility for generating test event data
+
+Types pf events:
+
 Start - This method initializes capture of telemetric data associated to the start of user action
 Impression - This method is used to capture telemetry for user visits to a specific page.
 Interact - This method is used to capture user interactions on a page. For example, search, click, preview, move, resize, configure
@@ -18,6 +22,7 @@ Exdata - This method is used as a generic wrapper event to capture encrypted or 
 End - This method is used to capture closure after all the activities are completed
 
 """
+
 import uuid
 import time
 
@@ -44,14 +49,12 @@ EVENT_TYPES = {
 }
 
 
-def get_impression_event_data():
-    return get_event_data('IMPRESSION')
+def get_batch_event_data(event_types):
+    if any(e_type not in EVENT_TYPES for e_type in event_types):
+        raise AssertionError('Invalid event types %s' % event_types)
 
-
-def get_event_data(event_type):
-    if event_type not in EVENT_TYPES:
-        raise AssertionError('Invalid event type "%s"' % event_type)
-    return {
+    events = [get_event_data(e_type) for e_type in event_types]
+    batch_event_data = {
         "id": "api.sunbird.telemetry",
         "ver": "3.0",
         "ets": timestamp(),
@@ -60,44 +63,48 @@ def get_event_data(event_type):
         "params": {
             "msgid": new_uuid()
         },
-        "events": [
-            {
-                "eid": event_type,
-                "ets": timestamp(),
-                "ver": "3.0",
-                "mid": new_uuid(),
-                "actor": {
-                    "id": "1f84c02a-5098-4358-b014-318fecb69327",
-                    "type": "User"
-                },
-                "context": {
-                    "channel": "in.ekstep",
-                    "pdata": {
-                        "id": "web-ui",
-                        "ver": "1.0.0",
-                        "pid": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"
-                    },
-                    "env": ENV,
-                    "sid": "",
-                    "did": "2c90e550e243f6285c0955b1e70d1681",
-                    "cdata": [],
-                    "rollup": {}
-                },
-                "object": {
-                    "ver": "1.0",
-                    "id": "page/home"
-                },
-                "tags": [],
-                "edata": {
-                    "pageid": "page/home",
-                    "pageUrl": "page/home",
-                    "pageUrlParts": ["page", "home"],
-                    "refferUrl": "page/home",
-                    "objectId": None
-                }
-            }
-        ],
+        "events": events
+    }
+    return batch_event_data
 
+
+def get_event_data(event_type):
+    if event_type not in EVENT_TYPES:
+        raise AssertionError('Invalid event type "%s"' % event_type)
+    return {
+        "eid": event_type,
+        "ets": timestamp(),
+        "ver": "3.0",
+        "mid": new_uuid(),
+        "actor": {
+            "id": "1f84c02a-5098-4358-b014-318fecb69327",
+            "type": "User"
+        },
+        "context": {
+            "channel": "in.ekstep",
+            "pdata": {
+                "id": "web-ui",
+                "ver": "1.0.0",
+                "pid": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36"
+            },
+            "env": ENV,
+            "sid": "",
+            "did": "2c90e550e243f6285c0955b1e70d1681",
+            "cdata": [],
+            "rollup": {}
+        },
+        "object": {
+            "ver": "1.0",
+            "id": "page/home"
+        },
+        "tags": [],
+        "edata": {
+            "pageid": "page/home",
+            "pageUrl": "page/home",
+            "pageUrlParts": ["page", "home"],
+            "refferUrl": "page/home",
+            "objectId": None
+        }
     }
 
 

@@ -13,5 +13,6 @@ export kafka_topic_logs=druid.events.log
 
 export kafka_topic_failed=telemetry.failed
 export kafka_topic_duplicate=telemetry.duplicate
+export kafka_topic_batch_duplicate=telemetry.extractor.duplicate
 
 python3 -u test/main.py

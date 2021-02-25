@@ -4,8 +4,6 @@ RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get install -y build-essential libssl-dev libffi-dev python3 python3-dev
 RUN apt-get install -y python3-pip
-
-# RUN apk add libexecinfo libexecinfo-dev
 RUN apt-get install -y libsnappy-dev
 
 # set the working directory in the container
