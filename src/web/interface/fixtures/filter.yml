@@ -1,0 +1,15 @@
+- model: interface.Filter
+  pk: 1
+  fields:
+    name: batch_event_equals
+    operation: equals
+    produced_data_path: ./params/msgid
+    consumed_data_path: ./params/msgid
+
+- model: interface.Filter
+  pk: 2
+  fields:
+    name: event_in_batch
+    operation: in
+    produced_data_path: ./events//mid
+    consumed_data_path: ./mid

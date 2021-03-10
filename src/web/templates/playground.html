@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+<div class="content pg">
+
+    <div class="pg-kafka-settings form-inline">
+        <div class="pg-setting">
+            <label>
+                <span>Broker IP</span>
+                <input class="form-control kafka-host" type="text" value="10.0.0.5">
+            </label>
+        </div>
+        <div class="pg-setting">
+            <label>
+                <span>Broker Port</span>
+                <input class="form-control kafka-port" type="number" value="9092">
+            </label>
+        </div>
+        <div class="pg-setting">
+            <label>
+                <span>Zookeeper IP</span>
+                <input class="form-control zk-host" type="text" value="localhost">
+            </label>
+        </div>
+        <div class="pg-setting">
+            <label>
+                <span>Zookeeper Port</span>
+                <input class="form-control zk-port" type="number" value="2181">
+            </label>
+        </div>
+    </div>
+
+    <div class="produce-messages form-group">
+
+         <label>
+             <span>Topic</span>
+             <input class="form-control data-topic" type="text" value="">
+         </label>
+
+        <label>
+             <span>Data</span>
+            <textarea class="form-control producer-data"></textarea>
+        </label>
+
+        <button class="btn btn-default">Send</button>
+
+        <div class="notification-area dp-can-load hidden">
+            <img class="dp-loading-img" src="/static/img/loading.svg" alt="loading">
+            <div class="notification error"></div>
+        </div>
+    </div>
+
+    <div class="consume-messages">
+
+        <div class="add-consumer-section form-inline">
+            <label>
+                <span>Topic</span>
+                <input class="form-control data-topic" type="text" value="">
+            </label>
+
+            <button class="btn btn-default add_consumer_btn">Add</button>
+
+            <div class="notification-area dp-can-load hidden">
+                <img class="dp-loading-img" src="/static/img/loading.svg" alt="loading">
+                <div class="notification error"></div>
+            </div>
+        </div>
+
+        <ul class="nav-template template">
+            <li class="nav-item dp-can-load loading">
+                <img class="dp-loading-img" src="/static/img/loading.svg" alt="loading">
+                <a class="nav-link active data-topic" data-toggle="tab" href=""></a>
+                <span>(<span class="msg-count">0<span>)</span>
+                <a class="close-consumer">&times;</a>
+            </li>
+            {% if 0 %}
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <ul class="consumers-nav nav nav-tabs">
+        </ul>
+
+        <div class="consumer-tab-template template">
+            <div class="consumer tab-pane fade active" id="">
+                <div class="topic"></div>
+                <div class="messages"></div>
+            </div>
+        </div>
+
+        <div class="message-template template">
+            <div class="message"></div>
+        </div>
+
+        <div class="consumers-tab-container tab-content">
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="content">
+        <form>
+            <div class="test_case_data form-group" id="root" data-io-prop="" data-io-type="object" data-io-level="0">
+
+            <div class="input_area">
+                <input type="hidden" data-io-prop="id" data-io-level="1">
+                <label>
+                    <span>Test Case Name</span>
+                    <input class="tc_input test_case_name form-control" type="text" value="" data-io-prop="name" data-io-type="" data-io-level="1">
+                </label>
+                <label>
+                    <span>Data to Ingest</span>
+                    <textarea class="tc_input test_case_data form-control" data-io-prop="data" data-io-type="json" data-io-level="1" aria-label="input for ingestion data"></textarea>
+                </label>
+                <label>
+                    <span>Consumer Timeout</span>
+                    <input class="tc_input test_case_consumer_timeout form-control" type="number" min="2" max="30" value="10"
+                       data-io-prop="consumer_timeout" data-io-type="float" data-io-level="1"><span>seconds</span>
+                </label>
+                <div class="producer_details" data-io-prop="producers" data-io-type="array" data-io-level="1">
+                    <div class="producer" data-io-prop="" data-io-type="object" data-io-level="2">
+                        <input type="hidden" data-io-prop="id" data-io-level="3">
+                        <input type="hidden" data-io-prop="producer_type" data-io-level="3" value="kafka">
+                        <label>
+                            <span>Ingestion Topic</span>
+                            <select class="tc_input ingestion_topic_select form-control" data-io-prop="kafka_topic" data-io-level="3">
+                                <option value="dev.telemetry.ingest" selected>dev.telemetry.ingest</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="test_case_consumer_topics" data-io-prop="consumers" data-io-type="array" data-io-level="1">
+
+                <table class="tc_table template">
+                    <tbody>
+                        <tr class="tc_consumer" data-io-prop="" data-io-type="object" data-io-template data-io-level="2">
+                            <td>
+                                <input class="tc_input tc_consumer_topic form-control" data-io-prop="kafka_topic" data-io-level="3"
+                                       aria-label="topic">
+                                <input type="hidden" data-io-prop="id" data-io-level="3">
+                                <input type="hidden" data-io-prop="consumer_type" data-io-level="3" value="kafka">
+                                <input type="hidden" data-io-prop="data_filter" data-io-level="3" value="auto">
+                            </td>
+                            <td>
+                                <input class="tc_input tc_consumer_capture form-control" type="checkbox" data-io-prop="capture"
+                                       data-io-level="3" aria-label="capture">
+                            </td>
+                            <td>
+                                <input class="tc_input tc_consumer_expected form-control" type="number" min="0" value="0"
+                                       data-io-prop="expected_count" data-io-type="int" data-io-level="3"
+                                       aria-label="expected count">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="tc_table table">
+                    <tbody data-io-array-container>
+                        <tr><th>Topic</th>      <th>Capture</th>        <th>Expected Count</th></tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div>
+                <button class="submit_btn btn">Send</button>
+            </div>
+        </div>
+        </form>
+
+        <div class="result_area">
+
+        </div>
+
+        <div class="template">
+            <div class="topic_info">
+                <div class="topic_details"></div>
+                <textarea class="json_input" aria-label="captured topic data"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

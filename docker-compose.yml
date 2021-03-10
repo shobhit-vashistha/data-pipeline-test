@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - dp_test_static_files:/src/web/static
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+#
+#  redis:
+#    image: redis
+#    expose:
+#      - 6379
+#
+#  test:
+#    volumes:
+#      - static:/src/web/static
+#    build: ./src
+#    command: run_tests
+#    env_file:
+#      - env/local
+#    expose:
+#      - 6660
+
+  web:
+    volumes:
+      - dp_test_static_files:/src/web/static
+    build: ./src
+    command: run_server
+    env_file:
+      - env/local
+    expose:
+      - 6660
+#
+#  worker:
+#    build: ./src
+#    command: run_celery_worker
+#    links:
+#      - redis
+#    depends_on:
+#      - redis
+
+
+
+volumes:
+  dp_test_static_files:

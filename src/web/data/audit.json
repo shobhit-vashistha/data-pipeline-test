@@ -1,0 +1,226 @@
+[
+  {
+    "actor": {
+      "id": "internal",
+      "type": "Consumer"
+    },
+    "eid": "AUDIT",
+    "edata": {
+      "state": "Create",
+      "props": [
+        "channel",
+        "email",
+        "emailVerified",
+        "firstName",
+        "lastName",
+        "id",
+        "userId",
+        "rootOrgId",
+        "roles",
+        "countryCode",
+        "isDeleted",
+        "createdDate",
+        "status",
+        "userName",
+        "maskedEmail",
+        "flagsValue",
+        "organisations",
+        "rootOrgName",
+        "phone",
+        "phoneVerified",
+        "stateValidated",
+        "identifier"
+      ]
+    },
+    "ver": "3.0",
+    "syncts": 1615211149530,
+    "@timestamp": "2021-03-08T13:45:49.530Z",
+    "ets": 1615211134488,
+    "context": {
+      "channel": "0131397178949058560",
+      "pdata": {
+        "id": "dev.sunbird.learning.service",
+        "pid": "learner-service",
+        "ver": "3.6.0"
+      },
+      "env": "User",
+      "cdata": [
+        {
+          "id": "727fc7cd-49c0-46e5-9cb6-86ce90deef46",
+          "type": "User"
+        },
+        {
+          "id": "bd708e39-0299-434b-a0c8-ea8af1a224e6",
+          "type": "Request"
+        }
+      ],
+      "rollup": {
+        "l1": "0131397178949058560"
+      }
+    },
+    "flags": {
+      "pp_duplicate_skipped": true,
+      "pp_validation_processed": true,
+      "content_denorm": false,
+      "dv_processed": true
+    },
+    "mid": "bd708e39-0299-434b-a0c8-ea8af1a224e6",
+    "type": "events",
+    "object": {
+      "id": "727fc7cd-49c0-46e5-9cb6-86ce90deef46",
+      "type": "User"
+    }
+  },
+  {
+    "actor": {
+      "id": "internal",
+      "type": "Consumer"
+    },
+    "eid": "AUDIT",
+    "edata": {
+      "state": "Create",
+      "props": [
+        "channel",
+        "email",
+        "emailVerified",
+        "firstName",
+        "lastName",
+        "id",
+        "userId",
+        "rootOrgId",
+        "roles",
+        "countryCode",
+        "isDeleted",
+        "createdDate",
+        "status",
+        "userName",
+        "maskedEmail",
+        "flagsValue",
+        "organisations",
+        "rootOrgName",
+        "phone",
+        "phoneVerified",
+        "stateValidated",
+        "identifier"
+      ]
+    },
+    "ver": "3.0",
+    "syncts": 1615210944623,
+    "@timestamp": "2021-03-08T13:42:24.623Z",
+    "ets": 1615210929617,
+    "context": {
+      "channel": "0131397178949058560",
+      "pdata": {
+        "id": "dev.sunbird.learning.service",
+        "pid": "learner-service",
+        "ver": "3.6.0"
+      },
+      "env": "User",
+      "cdata": [
+        {
+          "id": "b22ff76a-68b1-4efb-9b20-9f54e7d7309a",
+          "type": "User"
+        },
+        {
+          "id": "050778d8-e31d-4138-b82d-5a5703d1305b",
+          "type": "Request"
+        }
+      ],
+      "rollup": {
+        "l1": "0131397178949058560"
+      }
+    },
+    "flags": {
+      "pp_duplicate_skipped": true,
+      "pp_validation_processed": true,
+      "content_denorm": false,
+      "dv_processed": true
+    },
+    "mid": "050778d8-e31d-4138-b82d-5a5703d1305b",
+    "type": "events",
+    "object": {
+      "id": "b22ff76a-68b1-4efb-9b20-9f54e7d7309a",
+      "type": "User"
+    }
+  },
+  {
+    "eid": "AUDIT",
+    "ver": "3.0",
+    "syncts": 1614154679425,
+    "ets": 1614154679425,
+    "flags": {
+      "pp_duplicate_skipped": true,
+      "pp_validation_processed": true,
+      "content_denorm": true,
+      "dv_processed": true
+    },
+    "mid": "LP.1614154679425.613131e2-0007-4604-9bbe-d004ad6387ae",
+    "type": "events",
+    "actor": {
+      "id": "ANONYMOUS",
+      "type": "User"
+    },
+    "edata": {
+      "duration": 0,
+      "state": "Live",
+      "prevstate": "Processing",
+      "props": [
+        "toc_url",
+        "contentTypesCount",
+        "se_FWIds",
+        "prevStatus",
+        "childNodes",
+        "downloadUrl",
+        "variants",
+        "leafNodes",
+        "posterImage",
+        "pkgVersion",
+        "appIcon",
+        "s3Key",
+        "lastPublishedOn",
+        "size",
+        "leafNodesCount",
+        "compatibilityLevel",
+        "mimeTypesCount",
+        "totalCompressedSize",
+        "status"
+      ]
+    },
+    "@timestamp": "2021-02-24T08:17:59.425Z",
+    "contentdata": {
+      "createdfor": [
+        "0131397178949058560"
+      ],
+      "lastsubmittedon": 1614153829398,
+      "pkgversion": 1.0,
+      "channel": "0131397178949058560",
+      "language": [
+        "English"
+      ],
+      "lastpublishedon": 1614154678779,
+      "contenttype": "Course",
+      "lastupdatedon": 1.614154678E12,
+      "framework": "igot",
+      "createdby": "5574b3c5-16ca-49d8-8059-705304f2c7fb",
+      "name": "course title data 1",
+      "mimetype": "application/vnd.ekstep.content-collection",
+      "objecttype": "Collection",
+      "mediatype": "content",
+      "status": "Live"
+    },
+    "context": {
+      "channel": "0131397178949058560",
+      "pdata": {
+        "id": "dev.dev.learning.platform",
+        "pid": "audit-event-generator",
+        "ver": "1.0"
+      },
+      "env": "collection"
+    },
+    "object": {
+      "id": "do_11322314340196352011",
+      "type": "Collection",
+      "ver": "1.0"
+    }
+  }
+]

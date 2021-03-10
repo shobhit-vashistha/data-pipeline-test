@@ -1,0 +1,11 @@
+kubectl logs --tail 10 telemetry-extractor-taskmanager-5d496c5657-l2zxh -n flink-dev
+
+> org.apache.kafka.clients.NetworkClient - [Producer clientId=producer-7] Error while fetching metadata with correlation id 2795 : {dev.telemetry.extractor.duplicate=UNKNOWN_TOPIC_OR_PARTITION}
+> ...
+
+ssh -i /var/lib/jenkins/secrets/ops_ssh_key ubuntu@10.0.0.5
+cd /opt/kafka/bin
+./kafka-topics.sh --zookeeper localhost:2181 --list
+
+> no dev.telemetry.extractor.duplicate topic here
+

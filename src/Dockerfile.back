@@ -1,0 +1,80 @@
+###########
+# BUILDER #
+###########
+
+# pull official base image
+FROM python:3.8.3-alpine as builder
+
+# set work directory
+WORKDIR /usr/src/app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add \
+        postgresql-dev \
+        gcc \
+        python3-dev \
+        musl-dev \
+        ca-certificates \
+        libressl \
+        libressl-dev \
+        git \
+        g++ \
+        make \
+        zlib-dev \
+        librdkafka \
+        librdkafka-dev
+
+# lint
+RUN pip install --upgrade pip
+COPY . .
+
+# install dependencies
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+FROM python:3.8.3-alpine
+
+ENV APP_USER=app
+ENV APP_USER_HOME=/home/$APP_USER
+
+# create directory for the app user
+RUN mkdir -p $APP_USER_HOME
+
+# create the app user
+RUN addgroup -S $USER_NAME && adduser -S $USER_NAME -G $USER_NAME
+
+# create the appropriate directories
+
+ENV APP_HOME=$APP_USER_HOME/data-pipeline-test/src
+
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+
+# install dependencies
+RUN apk update && apk add libpq
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+# copy project
+COPY . $APP_HOME
+
+# chown all the files to the app user
+RUN chown -R $APP_USER:$APP_USER $APP_HOME
+
+# change to the app user
+USER $APP_USER
+
+# run entrypoint.sh
+ENTRYPOINT ["sh", "$APP_HOME/entrypoint.sh"]

@@ -1,0 +1,169 @@
+
+
+/* width */
+textarea::-webkit-scrollbar {
+    width: 10px;
+}
+/* Track */
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+/* Handle */
+textarea::-webkit-scrollbar-thumb {
+    background: #e2e2e2;
+}
+/* Handle on hover */
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #c2c2c2;
+}
+
+/* toast start */
+#toast_msg_element {
+    position: fixed;
+    left: 30px;
+    bottom: -45px;
+    opacity: 0.0;
+    transition: bottom 1000ms, opacity 1000ms;
+    z-index: 1200;
+    pointer-events: none;
+}
+#toast_msg_element.is_shown {
+    bottom: 20px;
+    opacity: 1.0;
+}
+#toast_msg_container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+#toast_msg_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000;
+    border-radius: 3px;
+    opacity: 0.8;
+}
+#toast_msg_element.error_toast #toast_msg_bg {
+    background: #dd3a1f;
+}
+#toast_msg_element.success_toast #toast_msg_bg {
+    background: #615ebc;
+}
+#toast_msg {
+    padding: 13px 26px;
+    color: white;
+    font-size: 14px;
+    font-style: italic;
+    position: relative;
+    text-shadow: 0 0 5px #666666;
+}
+/* toast end */
+
+/* progress start */
+.progress_element {
+    position: fixed;
+    opacity: 0.0;
+    transition: opacity 200ms;
+    z-index: 1200;
+    pointer-events: none;
+}
+.progress_element.is_shown {
+    opacity: 1.0;
+}
+.progress_container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+.progress_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000;
+    border-radius: 3px;
+    opacity: 0.8;
+}
+.progress_loading_img {
+    padding: 13px;
+    position: relative;
+}
+.progress_loading_img img {
+    width: 24px;
+}
+.progress_msg {
+    color: white;
+    font-style: italic;
+    padding: 0 10px 0 5px;
+}
+#default_progress_element {
+    right: 30px;
+    bottom: 20px;
+}
+#upload_progress_element {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+}
+/* progress end */
+
+.navbar-brand img {
+
+}
+.navbar-brand h1 {
+    display: inline;
+    color: #1886b6;
+    font-size: 24px;
+    font-weight: lighter;
+    margin-top: 14px;
+    margin-left: 10px;
+}
+
+.container-fluid {
+    margin-top: 80px;
+}
+
+.content {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.test_case_data label {
+    /*display: block;*/
+}
+
+/*
+body {
+    background-color: #293743;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #bbbbbb;
+    font-size: 14px;
+}
+.header {
+    padding: 10px 0;
+    height: 48px;
+    border-bottom: 1px solid #0d4761;
+    margin-bottom: 20px;
+}
+
+.content {
+    padding: 0 20px;
+}
+
+.input_area > label {
+    display: block;
+}
+.tc_input {
+
+}
+
+ */
+.template {
+    display: none;
+}
