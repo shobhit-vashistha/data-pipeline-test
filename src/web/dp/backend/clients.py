@@ -178,6 +178,7 @@ class KafkaPythonClient(Client):
 
     def get_kafka_producer(self):
         from kafka import KafkaProducer
+        print('kafka=', env.BOOTSTRAP_SERVER)
         return KafkaProducer(bootstrap_servers=[env.BOOTSTRAP_SERVER], value_serializer=serialize)
 
     def send(self, producer, topic, data):

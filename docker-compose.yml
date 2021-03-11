@@ -7,9 +7,58 @@ services:
     volumes:
       - dp_test_static_files:/src/web/static
     ports:
-      - "6660:6660"
+      - "80:80"
+    networks:
+      app-tier:
     depends_on:
       - web
+
+  web:
+    volumes:
+      - dp_test_static_files:/src/web/static
+    build: ./src
+    command: run_server
+    env_file:
+      - env/local
+    expose:
+      - 6660
+    networks:
+      app-tier:
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    logging:
+      driver: none
+    networks:
+      app-tier:
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    env_file:
+      - env/local
+    environment:
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "${KAFKA_TOPICS}"
+      KAFKA_CREATE_TOPICS_SEPARATOR: "$$'\n'"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      driver: none
+    networks:
+      app-tier:
+
 #
 #  redis:
 #    image: redis
@@ -25,16 +74,6 @@ services:
 #      - env/local
 #    expose:
 #      - 6660
-
-  web:
-    volumes:
-      - dp_test_static_files:/src/web/static
-    build: ./src
-    command: run_server
-    env_file:
-      - env/local
-    expose:
-      - 6600
 #
 #  worker:
 #    build: ./src
@@ -45,6 +84,8 @@ services:
 #      - redis
 
 
-
 volumes:
   dp_test_static_files:
+networks:
+  app-tier:
+    driver: bridge

@@ -1,6 +1,6 @@
 export env=dev
 
-export kafka_ip=10.0.0.5
+export kafka_ip=${KAFKA_HOST}
 export kafka_port=9092
 
 export kafka_topic_ingest=telemetry.ingest

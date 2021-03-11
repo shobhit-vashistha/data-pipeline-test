@@ -13,15 +13,15 @@ WORKDIR /src
 RUN export PYTHONPATH="$PYTHONPATH:/src"
 
 # copy the dependencies file to the working directory
-COPY requirements.txt .
+COPY ../requirements.txt .
 
 # install dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY . .
+COPY .. .
 
-RUN chmod u+x ./run_dev_server.sh
+RUN chmod u+x ./run_server.sh
 
 # command to run on container start
-ENTRYPOINT ["/bin/bash", "-c", "./run_dev_server.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "./run_server.sh"]
