@@ -33,7 +33,8 @@ def get_kafka_messages_multi_topic(results, event_data, expected_counts, consume
 
     all_topic_messages, wait_seconds = client.get_messages(consumer, consumer_timeout)
 
-    for topic, all_messages in all_topic_messages.items():
+    for topic_obj, all_messages in all_topic_messages.items():
+        topic = topic_obj.topic
         filter_func = get_filter_func(topic, event_data)
         expected_count = expected_counts[topic]
 
