@@ -45,10 +45,22 @@ dp.home = (function () {
       }
     };
 
+    const example_batch_data = {
+        "id": "api.sunbird.telemetry",
+        "ver": "3.0",
+        "params": {
+            "msgid": "bc73d44e53ae52aeb58ac84a23ab888a"
+        },
+        "ets": 1615468495474,
+        "events": [
+            example_impression_event_data
+        ]
+    }
+
     const default_test_case_data = {
         'name': 'untitled',
         'consumer_timeout': 5,
-        'data': [example_impression_event_data],
+        'data': [example_batch_data],
         'producers': [
             {
                 'producer_type': 'kafka',
