@@ -4,8 +4,46 @@ dp.home = (function () {
     const log = dp.log('[home]');
 
     const example_impression_event_data = {
-
-    }
+      "eid": "IMPRESSION",
+      "ets": 1615468479199,
+      "ver": "3.0",
+      "mid": "IMPRESSION:1c2bacd9e1e04f7a0c4ca3f7aa59e5ae",
+      "actor": {
+        "id": "d56fec8d-a814-436b-90c5-f396fc4dac42",
+        "type": "User"
+      },
+      "context": {
+        "channel": "igot",
+        "pdata": {
+          "id": "lex-web-ui",
+          "ver": "1.0.0",
+          "pid": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36"
+        },
+        "env": "prod",
+        "sid": "",
+        "did": "2c90e550e243f6285c0955b1e70d1681",
+        "cdata": [],
+        "rollup": {}
+      },
+      "object": {
+        "ver": "1.0",
+        "id": "page/learn",
+        "pageid": "page/learn",
+        "type": "",
+        "uri": "page/learn"
+      },
+      "tags": [],
+      "edata": {
+        "pageid": "page/learn",
+        "pageUrl": "page/learn",
+        "pageUrlParts": [
+          "page",
+          "learn"
+        ],
+        "refferUrl": "page/home",
+        "objectId": null
+      }
+    };
 
     const default_test_case_data = {
         'name': 'untitled',

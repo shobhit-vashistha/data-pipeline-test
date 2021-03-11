@@ -21,7 +21,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # copy the content of the local src directory to the working directory
 COPY . .
 
-EXPOSE 8000
+EXPOSE 6660
 
 RUN chmod u+x ./run_server.sh
 
