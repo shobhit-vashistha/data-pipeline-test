@@ -28,9 +28,9 @@ def test(request):
     event_data = data['data']
     consumer_timeout = data['consumer_timeout']
 
-    to_de_duplicate = data.get('de_duplicate', False)
+    to_de_duplicate = data.get('de_duplicate', True)
     if to_de_duplicate:
-        event_data = de_duplicate(event_data)
+        event_data = [de_duplicate(e) for e in event_data]
 
     consumer_data = data['consumers']
 
