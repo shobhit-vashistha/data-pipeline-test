@@ -56,7 +56,6 @@ def get_kafka_messages_multi_topic(results, event_data, expected_counts, consume
             'expected_count': expected_count,
             'actual_count': message_count,
             'ignored_count': len(ignored_messages),
-            'messages_desc': [make_readable(m) for m in messages],
             'messages': messages,
             'ignored_messages': ignored_messages
         }

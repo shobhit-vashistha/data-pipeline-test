@@ -59,7 +59,7 @@ dp.home = (function () {
 
     const default_test_case_data = {
         'name': 'untitled',
-        'consumer_timeout': 5,
+        'consumer_timeout': 20,
         'data': [example_batch_data],
         'producers': [
             {
