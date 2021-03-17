@@ -33,16 +33,24 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     public void execute(ByteBuf inBuffer, ChannelHandlerContext ctx) throws Exception {
         String received = inBuffer.toString(CharsetUtil.UTF_8);
+        received = received.strip();
+        // return if empty msg
+        if (received.length() == 0) return;
+
         if (received.startsWith("SUB ")) {
             String[] command = received.split(" ");
             String topic = command[1].strip();
-
+            String filterString = command.length > 2 ? command[2].strip() : null;
+            final Filter filter = filterString == null ? Filter.PASS_ALL : Filter.getContainsFilter(filterString);
             try {
                 consumer = new SingleTopicConsumer();
                 consumer.subscribe(topic, new SingleTopicConsumer.MessageHandler() {
                     @Override
                     public void handle(ConsumerRecord<Long, String> record) {
-                        sendString(ctx, record.value());
+                        String msg = record.value();
+                        if (filter.passes(msg)) {
+                            sendString(ctx, msg);
+                        }
                     }
                 });
                 consumer.start();
@@ -67,7 +75,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     public static void sendString(ChannelHandlerContext ctx, String string) {
-        ctx.write(Unpooled.copiedBuffer(string, CharsetUtil.UTF_8));
+        ctx.write(Unpooled.copiedBuffer(string + "\n", CharsetUtil.UTF_8));
         ctx.flush();
     }
 

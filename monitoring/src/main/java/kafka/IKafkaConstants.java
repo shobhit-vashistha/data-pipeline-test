@@ -9,7 +9,7 @@ public interface IKafkaConstants {
 
     public static String GROUP_ID_CONFIG="dp-test-group";
 
-    public static Integer MAX_NO_MESSAGE_FOUND_COUNT = 10000;
+    public static Integer MAX_NO_MESSAGE_FOUND_COUNT = 100000;
 
     public static String OFFSET_RESET_LATEST = "latest";
 

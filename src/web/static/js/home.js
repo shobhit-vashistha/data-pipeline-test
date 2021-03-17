@@ -237,6 +237,7 @@ dp.pg = (function () {
     function startKafkaConsumer(topic, onReceive) {
         topic_callbacks[topic] = onReceive;
         open_topics[topic] = 'running';
+        
     }
 
     function notify($notification_area, msg, error=false) {
