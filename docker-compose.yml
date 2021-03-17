@@ -29,8 +29,6 @@ services:
     build: ./monitoring
     ports:
       - "6666:6666"
-
-
 #
 #  zookeeper:
 #    image: wurstmeister/zookeeper
@@ -38,8 +36,6 @@ services:
 #      - "2181:2181"
 #    logging:
 #      driver: none
-#    networks:
-#      app-tier:
 #
 #  kafka:
 #    image: wurstmeister/kafka:latest
@@ -57,14 +53,11 @@ services:
 #      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
 #      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
 #      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-#      KAFKA_CREATE_TOPICS: "${KAFKA_TOPICS}"
-#      KAFKA_CREATE_TOPICS_SEPARATOR: "$$'\n'"
+#      KAFKA_CREATE_TOPICS: "topic.test_a:1:1,topic.test_b:1:1"
 #    volumes:
 #      - /var/run/docker.sock:/var/run/docker.sock
 #    logging:
 #      driver: none
-#    networks:
-#      app-tier:
 
 #
 #  redis:

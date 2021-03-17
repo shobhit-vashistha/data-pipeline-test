@@ -35,7 +35,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         String received = inBuffer.toString(CharsetUtil.UTF_8);
         if (received.startsWith("SUB ")) {
             String[] command = received.split(" ");
-            String topic = command[1];
+            String topic = command[1].strip();
+
             try {
                 consumer = new SingleTopicConsumer();
                 consumer.subscribe(topic, new SingleTopicConsumer.MessageHandler() {
