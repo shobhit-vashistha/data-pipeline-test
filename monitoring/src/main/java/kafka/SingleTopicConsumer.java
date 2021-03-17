@@ -55,7 +55,7 @@ public class SingleTopicConsumer implements Closeable, AutoCloseable {
                 else
                     continue;
             }
-
+            noMessageFound = 0;
             // handle each record.
             consumerRecords.forEach(this::handle);
 
@@ -72,8 +72,11 @@ public class SingleTopicConsumer implements Closeable, AutoCloseable {
 
     private void closeConsumer() {
         if (consumer != null) {
-            consumer.unsubscribe();
-            consumer.close();
+            try {
+                consumer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -93,7 +96,7 @@ public class SingleTopicConsumer implements Closeable, AutoCloseable {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, IKafkaConstants.MAX_POLL_RECORDS);
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, IKafkaConstants.OFFSET_RESET_LATEST);
         return new KafkaConsumer<>(props);
     }

@@ -49,9 +49,16 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             } catch (KafkaException e) {
                 e.printStackTrace();
                 sendString(ctx, "ERROR: kafka error - " + received);
+            } catch (Exception e) {
+                e.printStackTrace();
+                sendString(ctx, "ERROR: other error - " + received);
             } finally {
                 if (consumer != null) {
-                    consumer.close();
+                    try {
+                        consumer.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } else {
