@@ -61,6 +61,8 @@ or, optionally you can turn off the state backend (flink will store state in mem
 
 ```
 
+Note: for more detailed info on different kafka topics and flink jobs click [here](https://github.com/shobhit-vashistha/sb-dp-doc#readme "Data-pipeline doc")  
+
 ## Druid
 
 ### Change log level for druid services
