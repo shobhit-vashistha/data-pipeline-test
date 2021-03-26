@@ -248,13 +248,13 @@ Check status, get data sources
 curl -X GET http://localhost:8090/status
 
 # show data sources
-curl -X GET http://10.0.0.13:8081/druid/coordinator/v1/datasources -i
+curl -X GET http://localhost:8081/druid/coordinator/v1/datasources -i
 ```
 
 Manage Ingestion
 ```sh
 # get running supervisor names
-curl -X GET http://10.0.0.13:8081/druid/indexer/v1/supervisor -i
+curl -X GET http://localhost:8081/druid/indexer/v1/supervisor -i
 
 # inspect particular supervisor ingestion config
 curl -X GET http://localhost:8081/druid/indexer/v1/supervisor/<supervisor-name> -i
