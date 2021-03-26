@@ -1,0 +1,62 @@
+{
+  "id": "ekstep.telemetry",
+  "ver": "3.0",
+  "ets": 1587321002147,
+  "events": [
+    {
+      "eid": "START",
+      "ets": 1587320992025,
+      "ver": "3.0",
+      "mid": "START:test01:d2128d35dae25a2fe6e07ff30b132c2b",
+      "actor": {
+        "id": "dee44b3171988592c3b3bc4f162d8b05",
+        "type": "User"
+      },
+      "context": {
+        "channel": "505c7c48ac6dc1edc9b08f21db5a571d",
+        "pdata": {
+          "id": "dev.sunbird.portal",
+          "ver": "2.8.7",
+          "pid": "sunbird-portal.contentplayer"
+        },
+        "env": "contentplayer",
+        "sid": "dbf47f72-0bce-8e76-37ef-cb9c1a80879f",
+        "did": "dee44b3171988592c3b3bc4f162d8b05",
+        "cdata": [
+          {
+            "id": "5b89553a1f835987955834fd37eba019",
+            "type": "ContentSession"
+          },
+          {
+            "id": "267b9868a37017bc540744b2fa5b0b75",
+            "type": "PlaySession"
+          }
+        ],
+        "rollup": {
+          "l1": "505c7c48ac6dc1edc9b08f21db5a571d"
+        }
+      },
+      "object": {
+        "id": "do_3129506000949903361207",
+        "type": "Content",
+        "ver": "1",
+        "rollup": {
+          "l1": "do_312960486912901120127",
+          "l2": "do_3129604869171118081773",
+          "l3": "do_3129604869171118081774"
+        }
+      },
+      "tags": [],
+      "edata": {
+        "type": "content",
+        "mode": "play",
+        "pageid": "",
+        "duration": 1.83
+      }
+    }
+  ],
+  "channel": "ntp",
+  "pid": "dev.sunbird.portal",
+  "mid": "test01:c74f5c80-826b-11ea-93b1-3b38b1e30f1a",
+  "syncts": 1587321000521
+}
