@@ -1,9 +1,40 @@
 # Data-pipeline troubleshooting
 
+To verify if data-pipeline is working properly
+- Ensure that if a unique, valid, recent event is ingested from kafka ingestion topic (e.g. `dev.telemetry.ingest`), it
+  is reaching the topic druid ingests from (e.g. `dev.druid.events.telemetry`)
+  - get golden data set from `test-data/flink_golden_dataset.json`
+  - update `data.params.msgid` to a unique uuid
+  - for each event in `data.events`, update `mid` to a unique uuid
+  - update time fields to a recent time, because `druid-event-validator` job drops older events (3 months) silently
+- When the event is confirmed to be reaching druid ingestion topic, check if a data-source is created in Druid, and the
+  message is added 
+
+## Kafka
+
+```sh
+# ssh to kafka server (KP)
+cd opt/kafka/bin
+
+# to create a topic
+./kafka-topics.sh --create --topic <topic> --replication-factor 1 --partitions 1 --bootstrap-server localhost:9092
+
+# to list topics
+./kafka-topics.sh --list --zookeeper localhost:2181
+
+# start consumer add `--from-beginning` to get all messages from start
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic>
+
+# to start a producer
+./kafka-console-producer.sh --topic <topic> --broker-list localhost:9092
+
+```
+
 ## Flink jobs
 
 ### check logs for flink jobs
 ```sh
+# ssh to kubernetes server (jenkins in our case)
 # export Kubernetes config file environment variable
 export KUBECONFIG=/path/to/kube-config.yaml
 
@@ -18,6 +49,7 @@ if logs contain errors because of missing topics
 check if config for flink jobs is correct (`ansible/kubernetes/helm_charts/datapipeline/flink-jobs/values.j2`)
 or, to create missing topics, ssh to KP(kafka) server and create the topic
 ```sh
+# ssh to kafka server (KP)
 cd opt/kafka/bin
 ./kafka-topics.sh --create --topic <topic> --replication-factor 1 --partitions 1 --bootstrap-server localhost:9092
 ```
@@ -110,7 +142,7 @@ druid.indexer.logs.s3Prefix=druid/stage/indexing_logs
 
 additional config for s3 deep storage (optional)
 ```
-# uncomment to enable s3-based server side encryption
+# uncomment to enable server side encryption for s3
 # druid.storage.sse.type=s3
 
 # uncomment to enable v4 signing of requests
@@ -205,6 +237,7 @@ For configurations to take effect Druid services for which config has changed mu
 All Druid services except for `middlemanager` can be restarted safely through `systemctl`
 
 ```sh
+# ssh to druid
 systemctl restart druid_broker.service
 systemctl restart druid_coordinator.service
 systemctl restart druid_historical.service
@@ -215,8 +248,9 @@ to gracefully restart `middlemanager` first we have to suspend all running super
 segments which have not been published yet
 
 ```sh
+# ssh to druid
 # get running supervisor names
-curl -X GET http://10.0.0.13:8081/druid/indexer/v1/supervisor -i
+curl -X GET http://localhost:8081/druid/indexer/v1/supervisor -i
 
 # do this for all running supervisors
 # suspend supervisor (stop running tasks and publish segments)
